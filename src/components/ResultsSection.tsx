@@ -442,7 +442,8 @@ export default function ResultsSection({
                         <p
                           className={`${inter.className} text-xs text-[#153B5F]/50`}
                         >
-                          {c.bedrooms ?? "N/A"} bed · {c.bathrooms ?? "N/A"} bath ·{" "}
+                          {c.bedrooms ?? "N/A"} bed · {c.bathrooms ?? "N/A"}{" "}
+                          bath ·{" "}
                           {c.squareFootage != null
                             ? `${c.squareFootage.toLocaleString()} sqft`
                             : "N/A sqft"}
@@ -680,11 +681,31 @@ export default function ResultsSection({
                 }`}
               />
               {errors.phone && (
-                <p className={`${inter.className} text-[#E85D75] text-xs mb-4`}>
+                <p className={`${inter.className} text-[#E85D75] text-xs mb-1`}>
                   {errors.phone}
                 </p>
               )}
-              {!errors.phone && <div className="mb-6" />}
+              <p
+                className={`${inter.className} text-[11px] leading-relaxed text-[#0B1E33]/70 mb-6`}
+              >
+                By submitting, you agree to receive calls and text messages from
+                Listing Signal about your home value report and related updates.
+                Message and data rates may apply. Reply STOP to opt out. See our{" "}
+                <a
+                  href="/privacy-policy"
+                  className="underline hover:text-[#1FAE9F]"
+                >
+                  Privacy Policy
+                </a>{" "}
+                and{" "}
+                <a
+                  href="/terms-of-service"
+                  className="underline hover:text-[#1FAE9F]"
+                >
+                  Terms of Service
+                </a>
+                .
+              </p>
 
               {submitError && (
                 <p
