@@ -1,3 +1,5 @@
+// PATH: src/components/ResultsSection.tsx
+// REPLACES existing file. Only change: SMS consent paragraph under the phone field.
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -690,7 +692,9 @@ export default function ResultsSection({
               >
                 By submitting, you agree to receive calls and text messages from
                 Listing Signal about your home value report and related updates.
-                Message and data rates may apply. Reply STOP to opt out. See our{" "}
+                Message frequency varies. Message and data rates may apply.
+                Reply STOP to opt out or HELP for help. Consent is not a
+                condition of purchase. See our{" "}
                 <a
                   href="/privacy-policy"
                   className="underline hover:text-[#1FAE9F]"

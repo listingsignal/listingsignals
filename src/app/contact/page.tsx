@@ -1,3 +1,6 @@
+// PATH: src/app/contact/page.tsx
+// REPLACES existing file. Changes: phone input removed from form (avoids "multiple opt-in sources"),
+// left panel now shows Email, Phone and Address.
 "use client";
 
 import { useState } from "react";
@@ -9,7 +12,6 @@ const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700"] }
 interface FormState {
   name: string;
   email: string;
-  phone: string;
   message: string;
 }
 
@@ -20,7 +22,7 @@ interface FormErrors {
 }
 
 export default function ContactPage() {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState<FormState>({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -57,9 +59,7 @@ export default function ContactPage() {
 
   return (
     <main className="bg-[#F3F5F7]">
-      {/* ============================================================
-          HERO
-          ============================================================ */}
+      {/* HERO */}
       <section className="relative overflow-hidden bg-[#0B1E33]">
         <div
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.18]"
@@ -85,9 +85,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ============================================================
-          BODY — two-column: dark info panel (left) + form (right)
-          ============================================================ */}
+      {/* BODY — two-column: dark info panel (left) + form (right) */}
       <section className="mx-auto max-w-[1100px] px-4 py-16 sm:px-6 xl:px-10">
         <div className="overflow-hidden rounded-3xl bg-white shadow-[0_30px_70px_-40px_rgba(11,30,51,0.35)] ring-1 ring-[#0B1E33]/[0.05]">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_1.25fr]">
@@ -127,26 +125,40 @@ export default function ContactPage() {
                 <div className="flex items-start gap-3.5">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-[#1FAE9F]">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M12 21s-7-5.8-7-11a7 7 0 1114 0c0 5.2-7 11-7 11z" strokeLinecap="round" strokeLinejoin="round" />
-                      <circle cx="12" cy="10" r="2.5" />
+                      <path
+                        d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </span>
                   <div>
-                    <p className={`${inter.className} text-[13px] font-semibold text-white`}>Service Area</p>
-                    <p className={`${inter.className} text-[13px] text-white/50`}>Henderson, NV &amp; surrounding areas</p>
+                    <p className={`${inter.className} text-[13px] font-semibold text-white`}>Phone</p>
+                    <a
+                      href="tel:+17254254884"
+                      className={`${inter.className} text-[13px] text-white/50 transition-colors hover:text-[#1FAE9F]`}
+                    >
+                      (725) 425-4884
+                    </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-[#1FAE9F]">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <circle cx="12" cy="12" r="9" />
-                      <path d="M12 7v5l3 2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M12 21s-7-5.8-7-11a7 7 0 1114 0c0 5.2-7 11-7 11z" strokeLinecap="round" strokeLinejoin="round" />
+                      <circle cx="12" cy="10" r="2.5" />
                     </svg>
                   </span>
                   <div>
-                    <p className={`${inter.className} text-[13px] font-semibold text-white`}>Response Time</p>
-                    <p className={`${inter.className} text-[13px] text-white/50`}>Usually within a few hours</p>
+                    <p className={`${inter.className} text-[13px] font-semibold text-white`}>Address</p>
+                    <p className={`${inter.className} text-[13px] leading-relaxed text-white/50`}>
+                      Listing Signal
+                      <br />
+                      1250 Wigwam Pkwy
+                      <br />
+                      Henderson, NV 89074
+                    </p>
                   </div>
                 </div>
               </div>
@@ -204,17 +216,6 @@ export default function ContactPage() {
                   />
                   {errors.email && <p className={`${inter.className} mb-4 text-xs text-[#E85D75]`}>{errors.email}</p>}
                   {!errors.email && <div className="mb-4" />}
-
-                  <label className={`${inter.className} mb-2 block text-sm font-medium text-[#0B1E33]`}>
-                    Phone Number <span className="font-normal text-[#0B1E33]/40">(optional)</span>
-                  </label>
-                  <input
-                    type="tel"
-                    value={form.phone}
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    placeholder="(702) 000-0000"
-                    className={`${inter.className} mb-4 w-full rounded-xl border border-[#0B1E33]/10 bg-white px-4 py-3 text-sm text-[#0B1E33] outline-none placeholder:text-gray-400 focus:border-[#1FAE9F]`}
-                  />
 
                   <label className={`${inter.className} mb-2 block text-sm font-medium text-[#0B1E33]`}>
                     Message
