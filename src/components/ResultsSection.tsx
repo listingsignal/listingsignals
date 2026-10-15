@@ -169,6 +169,7 @@ export default function ResultsSection({
     phone: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [smsConsent, setSmsConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -289,6 +290,7 @@ export default function ResultsSection({
           firstName: form.firstName,
           email: form.email,
           phone: form.phone,
+          smsConsent,
         }),
       });
 
@@ -687,29 +689,31 @@ export default function ResultsSection({
                   {errors.phone}
                 </p>
               )}
-              <p
-                className={`${inter.className} text-[11px] leading-relaxed text-[#0B1E33]/70 mb-6`}
-              >
-                By submitting, you agree to receive calls and text messages from
-                Listing Signal about your home value report and related updates.
-                Message frequency varies. Message and data rates may apply.
-                Reply STOP to opt out or HELP for help. Consent is not a
-                condition of purchase. See our{" "}
-                <a
-                  href="/privacy-policy"
-                  className="underline hover:text-[#1FAE9F]"
+              <label className="mb-6 mt-3 flex cursor-pointer items-start gap-2.5">
+                <input
+                  type="checkbox"
+                  checked={smsConsent}
+                  onChange={(e) => setSmsConsent(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-[#1FAE9F]"
+                />
+                <span
+                  className={`${inter.className} text-[11px] leading-relaxed text-[#0B1E33]/70`}
                 >
-                  Privacy Policy
-                </a>{" "}
-                and{" "}
-                <a
-                  href="/terms-of-service"
-                  className="underline hover:text-[#1FAE9F]"
-                >
-                  Terms of Service
-                </a>
-                .
-              </p>
+                  I agree to receive text messages from LISTING SIGNAL about my
+                  home value report, appointment reminders and market updates.
+                  Message frequency varies. Message &amp; data rates may apply.
+                  Reply STOP to opt out or HELP for help. Consent is not a
+                  condition of purchase. See our{" "}
+                  <a href="/privacy-policy" className="underline hover:text-[#1FAE9F]">
+                    Privacy Policy
+                  </a>{" "}
+                  and{" "}
+                  <a href="/terms-of-service" className="underline hover:text-[#1FAE9F]">
+                    Terms of Service
+                  </a>
+                  .
+                </span>
+              </label>
 
               {submitError && (
                 <p

@@ -1,3 +1,5 @@
+// PATH: src/lib/ghl.ts
+// REPLACES existing file. Change: smsConsent added to payload and sent to GHL as "Yes"/"No".
 /**
  * GoHighLevel (GHL) webhook integration.
  *
@@ -17,6 +19,7 @@ export interface GhlLeadPayload {
   signalScore: number;
   signalTier: string;
   reportUrl: string | null;
+  smsConsent: boolean;
 }
 
 export class GhlWebhookError extends Error {
@@ -48,6 +51,7 @@ export async function sendLeadToGhl(payload: GhlLeadPayload): Promise<void> {
       signalScore: payload.signalScore,
       signalTier: payload.signalTier,
       report_url: payload.reportUrl ?? "",
+      smsConsent: payload.smsConsent ? "Yes" : "No",
     }),
   });
 

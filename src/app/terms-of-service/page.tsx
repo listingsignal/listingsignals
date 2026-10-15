@@ -1,3 +1,5 @@
+// PATH: src/app/terms-of-service/page.tsx
+// REPLACES existing file. Changes: SMS program terms updated for checkbox consent (name, types, frequency, STOP/HELP, support), new "Carrier Liability" section.
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -19,7 +21,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export default function TermsOfServicePage() {
-  const lastUpdated = "September 29, 2026";
+  const lastUpdated = "October 15, 2026";
 
   return (
     <main className="min-h-screen bg-[#F3F5F7] py-26 px-4 md:px-6 xl:px-10">
@@ -59,20 +61,44 @@ export default function TermsOfServicePage() {
           </p>
         </Section>
 
-        <Section title="5. Communications Consent">
+        <Section title="5. SMS Messaging Program &amp; Communications Consent">
           <p>
-            By submitting your contact information through our Site, you agree that Listing Signal may contact you
-            by email, phone, and text message (SMS) regarding your report, market updates, and scheduling a free
-            home review. Message and data rates may apply. You may opt out of SMS at any time by replying{" "}
-            <strong>STOP</strong>, and out of email by using the unsubscribe link in any email. See our{" "}
+            <strong>Program:</strong> Listing Signal text messaging. If you check the optional SMS consent box on
+            our form, you agree to receive text messages (SMS) from Listing Signal about your home value report,
+            appointment confirmations and reminders for a free home review, and market updates. Consent is not a
+            condition of purchase, and you can receive your report without agreeing to text messages.
+          </p>
+          <p>
+            <strong>Message frequency</strong> varies. <strong>Message and data rates may apply.</strong>
+          </p>
+          <p>
+            <strong>Opt out:</strong> Reply <strong>STOP</strong> at any time to stop receiving text messages. You
+            will receive one confirmation message and no further texts. <strong>Help:</strong> Reply{" "}
+            <strong>HELP</strong> for help, or contact us at{" "}
+            <a href="mailto:info@listingsignal.com" className="font-semibold text-[#1FAE9F] underline">
+              info@listingsignal.com
+            </a>
+            . You may opt out of emails by using the unsubscribe link in any email.
+          </p>
+          <p>
+            See our{" "}
             <a href="/privacy-policy" className="font-semibold text-[#1FAE9F] underline">
               Privacy Policy
             </a>{" "}
-            for more details.
+            for details on how we handle your information. We do not share mobile opt-in data with third parties
+            for marketing purposes.
           </p>
         </Section>
 
-        <Section title="6. Free Home Review Appointments">
+        <Section title="6. Carrier Liability">
+          <p>
+            Carriers and mobile network operators are not liable for delayed or undelivered messages. Message
+            delivery is subject to effective transmission from your wireless service provider and is outside our
+            control.
+          </p>
+        </Section>
+
+        <Section title="7. Free Home Review Appointments">
           <p>
             Scheduling a free home review does not obligate you to list your property with Listing Signal or any
             affiliated agent. There is no cost or commitment associated with booking or attending a free home
@@ -80,7 +106,7 @@ export default function TermsOfServicePage() {
           </p>
         </Section>
 
-        <Section title="7. Accuracy of Information">
+        <Section title="8. Accuracy of Information">
           <p>
             You agree to provide accurate and complete information when using our Site, including your property
             address and contact details. We are not responsible for report inaccuracies resulting from incorrect
@@ -88,7 +114,7 @@ export default function TermsOfServicePage() {
           </p>
         </Section>
 
-        <Section title="8. Intellectual Property">
+        <Section title="9. Intellectual Property">
           <p>
             All content on the Site, including the Listing Signal name, logo, Signal Score™ methodology, and
             report designs, is the property of Listing Signal and may not be copied, reproduced, or distributed
@@ -96,14 +122,14 @@ export default function TermsOfServicePage() {
           </p>
         </Section>
 
-        <Section title="9. Third-Party Data &amp; Services">
+        <Section title="10. Third-Party Data &amp; Services">
           <p>
             Our reports rely on data from third-party providers. We do not guarantee the accuracy, completeness,
             or timeliness of this data and are not liable for decisions made based on it.
           </p>
         </Section>
 
-        <Section title="10. Limitation of Liability">
+        <Section title="11. Limitation of Liability">
           <p>
             To the fullest extent permitted by law, Listing Signal shall not be liable for any indirect,
             incidental, or consequential damages arising from your use of the Site or reliance on any information
@@ -111,14 +137,14 @@ export default function TermsOfServicePage() {
           </p>
         </Section>
 
-        <Section title="11. Changes to These Terms">
+        <Section title="12. Changes to These Terms">
           <p>
             We may update these Terms from time to time. Continued use of the Site after changes are posted
             constitutes your acceptance of the revised Terms.
           </p>
         </Section>
 
-        <Section title="12. Contact Us">
+        <Section title="13. Contact Us">
           <p>
             Questions about these Terms can be directed to:{" "}
             <a href="mailto:info@listingsignal.com" className="font-semibold text-[#1FAE9F] underline">

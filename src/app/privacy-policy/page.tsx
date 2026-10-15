@@ -1,3 +1,5 @@
+// PATH: src/app/privacy-policy/page.tsx
+// REPLACES existing file. Changes: SMS section updated for checkbox consent, new "No Sharing" and "Data Security" sections.
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -19,7 +21,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = "September 29, 2026";
+  const lastUpdated = "October 15, 2026";
 
   return (
     <main className="min-h-screen bg-[#F3F5F7] py-26 px-4 md:px-6 xl:px-10">
@@ -43,7 +45,7 @@ export default function PrivacyPolicyPage() {
             <li><strong>Contact Information</strong> — your first name, email address, and phone number, provided
               when you request a report.</li>
             <li><strong>Communication Data</strong> — records of emails, text messages, and calls exchanged with us,
-              including booking and appointment details.</li>
+              including booking and appointment details, and your SMS consent choice.</li>
             <li><strong>Usage Data</strong> — how you interact with our Site, including pages visited and links
               clicked, collected automatically through standard web technologies.</li>
           </ul>
@@ -55,8 +57,9 @@ export default function PrivacyPolicyPage() {
             <li>Generate your automated home value estimate and Signal Score report.</li>
             <li>Deliver your report and related updates by email.</li>
             <li>
-              Contact you by phone, text message (SMS), and email to follow up on your report, share market
-              updates, and help you schedule a free home review. See Section 6 for details on SMS communications.
+              Contact you by email, and by text message (SMS) if you have agreed to receive texts, to follow up on
+              your report, share market updates, and help you schedule a free home review. See Section 6 for
+              details on SMS communications.
             </li>
             <li>Schedule and manage appointments for free home reviews.</li>
             <li>Improve and maintain our Site and services.</li>
@@ -74,51 +77,72 @@ export default function PrivacyPolicyPage() {
             </li>
             <li>Legal authorities, if required by law or to protect our rights.</li>
           </ul>
+          <p>See Section 7 for how we treat mobile information and SMS opt-in data.</p>
         </Section>
 
         <Section title="5. Data Retention">
           <p>
             We retain your information for as long as necessary to provide our services, including sending
             periodic market updates, unless you ask us to delete it sooner. You may request deletion of your
-            information at any time by contacting us (see Section 9).
+            information at any time by contacting us (see Section 11).
           </p>
         </Section>
 
         <Section title="6. SMS &amp; Email Communications">
           <p>
-            By submitting your phone number on our Site, you consent to receive text messages (SMS) from Listing
-            Signal related to your home value report, market updates, and scheduling a free home review. Message
-            frequency varies. Message and data rates may apply.
+            Listing Signal sends text messages (SMS) only to users who have checked the optional SMS consent box on
+            our form. The messages relate to your home value report, appointment confirmations and reminders for a
+            free home review, and market updates. Message frequency varies. Message and data rates may apply.
           </p>
           <p>
-            You can opt out of SMS messages at any time by replying <strong>STOP</strong> to any message. You can
-            opt out of email communications at any time by clicking the unsubscribe link included in our emails,
-            or by contacting us directly.
+            You can opt out of SMS messages at any time by replying <strong>STOP</strong> to any message. Reply{" "}
+            <strong>HELP</strong> for help. You can opt out of email communications at any time by clicking the
+            unsubscribe link included in our emails, or by contacting us directly.
           </p>
           <p>
-            Consent to receive SMS messages is not a condition of purchasing any goods or services. Carrier
-            charges may apply, and carriers are not liable for delayed or undelivered messages.
+            Consent to receive SMS messages is not a condition of purchasing any goods or services, and you can
+            receive your home value report without agreeing to text messages. Carriers are not liable for delayed
+            or undelivered messages.
           </p>
         </Section>
 
-        <Section title="7. Cookies &amp; Tracking Technologies">
+        <Section title="7. SMS Opt-In Data and No Sharing">
+          <p>
+            No mobile information will be shared with third parties or affiliates for marketing or promotional
+            purposes. Text messaging originator opt-in data and consent will not be shared with any third parties.
+            Information sharing to subcontractors in support services, such as customer service, is permitted. All
+            other use case categories exclude text messaging originator opt-in data and consent; this information
+            will not be shared with any third parties.
+          </p>
+        </Section>
+
+        <Section title="8. Data Security">
+          <p>
+            We use reasonable administrative, technical and physical safeguards to protect your personal
+            information, including encryption in transit (HTTPS), access controls limited to authorized personnel,
+            and secure third-party service providers. No method of transmission or storage is completely secure,
+            but we work to protect your information from unauthorized access, use or disclosure.
+          </p>
+        </Section>
+
+        <Section title="9. Cookies &amp; Tracking Technologies">
           <p>
             Our Site may use cookies and similar technologies to remember your preferences and understand how you
             use our Site. You can control cookies through your browser settings.
           </p>
         </Section>
 
-        <Section title="8. Your Rights">
+        <Section title="10. Your Rights">
           <p>Depending on your location, you may have the right to:</p>
           <ul className="list-disc space-y-1.5 pl-5">
             <li>Access the personal information we hold about you.</li>
             <li>Request correction or deletion of your personal information.</li>
-            <li>Opt out of marketing communications at any time.</li>
+            <li>Opt out of marketing communications, including SMS, at any time.</li>
           </ul>
-          <p>To exercise any of these rights, contact us using the information in Section 9.</p>
+          <p>To exercise any of these rights, contact us using the information in Section 11.</p>
         </Section>
 
-        <Section title="9. Contact Us">
+        <Section title="11. Contact Us">
           <p>
             If you have questions about this Privacy Policy or how we handle your information, contact us at:{" "}
             <a href="mailto:info@listingsignal.com" className="font-semibold text-[#1FAE9F] underline">
@@ -127,7 +151,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="10. Changes to This Policy">
+        <Section title="12. Changes to This Policy">
           <p>
             We may update this Privacy Policy from time to time. Any changes will be posted on this page with an
             updated &quot;Last updated&quot; date.

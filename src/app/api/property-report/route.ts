@@ -40,6 +40,7 @@ interface RequestBody {
   firstName: string;
   email: string;
   phone: string;
+  smsConsent?: boolean;
 }
 
 export async function POST(req: NextRequest) {
@@ -55,9 +56,13 @@ export async function POST(req: NextRequest) {
   const firstName = body.firstName?.trim();
   const email = body.email?.trim();
   const phone = body.phone?.trim();
+  const smsConsent = body.smsConsent === true;
 
   if (!address) {
-    return NextResponse.json({ error: "Address is required." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Address is required." },
+      { status: 400 },
+    );
   }
   if (!firstName || !email || !phone) {
     return NextResponse.json(
@@ -173,7 +178,10 @@ export async function POST(req: NextRequest) {
         bookingUrl,
       });
 
-      const fileUrl = await uploadPdf(`reports/${lead.id}-partial.pdf`, pdfBuffer);
+      const fileUrl = await uploadPdf(
+        `reports/${lead.id}-partial.pdf`,
+        pdfBuffer,
+      );
 
       const pdfRecord = await savePdfRecord({
         leadId: lead.id,
@@ -210,6 +218,7 @@ export async function POST(req: NextRequest) {
         signalScore: signal.score,
         signalTier: signal.tier,
         reportUrl: partialPdfUrl,
+        smsConsent,
       });
       await markGhlWebhookSent(lead.id);
     } catch (ghlError) {
