@@ -237,11 +237,10 @@ export default function GetReportPage() {
                 className={`${inter.className} text-xs leading-[1.65] text-[#0B1E33]/70`}
               >
                 I agree to receive text messages from LISTING SIGNAL about my
-                home value report, appointment confirmations and reminders for a
-                free home review, and occasional market updates. Message
-                frequency varies (up to 4 msgs/month). Message &amp; data rates
-                may apply. Reply STOP to opt out or HELP for help. Consent is
-                not a condition of purchase. See our{" "}
+                home value report, appointment reminders and market updates.
+                Message frequency varies (up to 4 msgs/month). Message &amp;
+                data rates may apply. Reply STOP to opt out or HELP for help.
+                Consent is not a condition of purchase. See our{" "}
                 <a
                   href="/privacy-policy"
                   className="underline hover:text-[#1FAE9F]"
