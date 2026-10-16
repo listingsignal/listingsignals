@@ -5,7 +5,10 @@
 import { useState } from "react";
 import { Playfair_Display, Inter } from "next/font/google";
 
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700"] });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+});
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
 interface FormState {
@@ -123,13 +126,14 @@ export default function GetReportPage() {
           <h1
             className={`${playfair.className} mt-5 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl`}
           >
-            Get Your Free <span className="text-[#1FAE9F]">Home Value Report.</span>
+            Get Your Free{" "}
+            <span className="text-[#1FAE9F]">Home Value Report.</span>
           </h1>
           <p
             className={`${inter.className} mx-auto mt-4 max-w-[520px] text-sm leading-relaxed text-white/65 sm:text-base`}
           >
-            Enter your details to see your instant home value, Signal Score,
-            and comparable sales.
+            Enter your details to see your instant home value, Signal Score, and
+            comparable sales.
           </p>
         </div>
       </section>
@@ -233,10 +237,11 @@ export default function GetReportPage() {
                 className={`${inter.className} text-xs leading-[1.65] text-[#0B1E33]/70`}
               >
                 I agree to receive text messages from LISTING SIGNAL about my
-                home value report, appointment reminders and market updates.
-                Message frequency varies. Message &amp; data rates may apply.
-                Reply STOP to opt out or HELP for help. Consent is not a
-                condition of purchase. See our{" "}
+                home value report, appointment confirmations and reminders for a
+                free home review, and occasional market updates. Message
+                frequency varies (up to 4 msgs/month). Message &amp; data rates
+                may apply. Reply STOP to opt out or HELP for help. Consent is
+                not a condition of purchase. See our{" "}
                 <a
                   href="/privacy-policy"
                   className="underline hover:text-[#1FAE9F]"
@@ -255,7 +260,9 @@ export default function GetReportPage() {
             </label>
 
             {submitError && (
-              <p className={`${inter.className} text-center text-xs text-[#E85D75]`}>
+              <p
+                className={`${inter.className} text-center text-xs text-[#E85D75]`}
+              >
                 {submitError}
               </p>
             )}

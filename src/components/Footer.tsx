@@ -1,5 +1,5 @@
 // PATH: src/components/Footer.tsx
-// REPLACES existing file. Only change: business address + phone added under email in "Get In Touch".
+// REPLACES existing file. Only change: "Get Free Report" link added under Company links.
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"] });
@@ -36,6 +36,11 @@ export default function Footer() {
               <li>
                 <a href="/contact" className={`${inter.className} text-sm text-white/60 transition-colors hover:text-[#1FAE9F]`}>
                   Contact Us
+                </a>
+              </li>
+              <li>
+                <a href="/get-report" className={`${inter.className} text-sm text-white/60 transition-colors hover:text-[#1FAE9F]`}>
+                  Get Free Report
                 </a>
               </li>
             </ul>
