@@ -1,5 +1,8 @@
+// PATH: src/lib/email.ts
+// REPLACES existing file. Changes: sendEmail() now supports replyTo and logs the real SendGrid error
+// (helps debug the 401); added appointmentCompletedEmailHtml() and contactNotificationEmailHtml() at the bottom.
 /**
- * Email sending — currently a STUB.
+ * Email sending — SendGrid.
  *
  * Once the SendGrid API key is available, replace the body of sendEmail()
  * with an actual SendGrid API call. Everything that calls sendEmail()
@@ -11,6 +14,7 @@ export interface SendEmailInput {
   subject: string;
   html: string;
   attachmentUrl?: string; // link-based delivery, not a raw attachment
+  replyTo?: string;
 }
 
 export async function sendEmail(input: SendEmailInput): Promise<{ sent: boolean }> {
@@ -33,10 +37,12 @@ export async function sendEmail(input: SendEmailInput): Promise<{ sent: boolean 
       from: { email: fromEmail, name: "Listing Signal" },
       subject: input.subject,
       html: input.html,
+      ...(input.replyTo ? { replyTo: input.replyTo } : {}),
     });
     return { sent: true };
   } catch (error) {
-    console.error("SendGrid send failed:", error);
+    const sgBody = (error as { response?: { body?: unknown } })?.response?.body;
+    console.error("SendGrid send failed:", sgBody ? JSON.stringify(sgBody) : error);
     return { sent: false };
   }
 }
@@ -180,6 +186,93 @@ export function fullReportEmailHtml(input: { firstName: string; reportUrl: strin
               </td>
             </tr>
           </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+  `;
+}
+
+
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+export function appointmentCompletedEmailHtml(input: { firstName: string; reportUrl: string; address: string }): string {
+  return `
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8" /></head>
+  <body style="margin:0; padding:0; background-color:#F3F5F7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F3F5F7; padding: 32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px; background-color:#ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(11,30,51,0.08);">
+            <tr>
+              <td style="background-color:#0B1E33; padding: 28px 32px;">
+                <span style="color:#1FAE9F; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">Your Full Report</span>
+                <h1 style="color:#ffffff; font-size:22px; font-weight:700; margin: 14px 0 0 0; line-height:1.3;">
+                  Thank you, ${input.firstName}.
+                </h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 32px;">
+                <p style="color:#374151; font-size:14px; line-height:1.6; margin: 0 0 4px 0;">
+                  Thanks for meeting with us. Here is your full Listing Signal™ report for:
+                </p>
+                <p style="color:#0B1E33; font-size:15px; font-weight:700; margin: 0 0 24px 0;">
+                  ${input.address}
+                </p>
+                <table role="presentation" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="background-color:#1FAE9F; border-radius: 10px;">
+                      <a href="${input.reportUrl}" target="_blank" style="display:inline-block; padding: 14px 28px; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none;">
+                        View Your Full Report (PDF)
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+                <p style="color:#6B7280; font-size:13px; line-height:1.6; margin: 24px 0 0 0;">
+                  If you have any questions about the report or the next steps, just reply to this email.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 20px 32px; border-top: 1px solid #E5E7EB;">
+                <p style="color:#9CA3AF; font-size:11px; line-height:1.6; margin: 0; text-align:center;">
+                  This automated report is for informational purposes only and is not a formal appraisal.<br />
+                  © ${new Date().getFullYear()} Listing Signal
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+  `;
+}
+
+export function contactNotificationEmailHtml(input: { name: string; email: string; message: string }): string {
+  return `
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8" /></head>
+  <body style="margin:0; padding:24px; background-color:#F3F5F7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 560px; margin:0 auto; background-color:#ffffff; border-radius: 12px; padding: 24px;">
+      <tr>
+        <td>
+          <h2 style="color:#0B1E33; font-size:18px; margin:0 0 16px 0;">New contact form message</h2>
+          <p style="color:#374151; font-size:14px; margin:0 0 4px 0;"><strong>Name:</strong> ${escapeHtml(input.name)}</p>
+          <p style="color:#374151; font-size:14px; margin:0 0 16px 0;"><strong>Email:</strong> ${escapeHtml(input.email)}</p>
+          <p style="color:#374151; font-size:14px; line-height:1.6; margin:0; white-space:pre-wrap;">${escapeHtml(input.message)}</p>
         </td>
       </tr>
     </table>

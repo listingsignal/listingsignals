@@ -1,3 +1,5 @@
+// PATH: src/components/LockedComparables.tsx
+// REPLACES existing file. Only change: new optional `booked` prop (overlay shows 'unlocks after your home visit').
 "use client";
 
 import { Inter } from "next/font/google";
@@ -21,6 +23,8 @@ interface LockedComparablesProps {
   medianPricePerSqft?: number | null;
   medianYearBuilt?: number | null;
   bookingUrl?: string;
+  /** true once the visit is booked: overlay stops linking to the booking page */
+  booked?: boolean;
 }
 
 export default function LockedComparables({
@@ -29,6 +33,7 @@ export default function LockedComparables({
   medianPricePerSqft,
   medianYearBuilt,
   bookingUrl,
+  booked = false,
 }: LockedComparablesProps) {
   if (!comparables.length) return null;
 
@@ -88,14 +93,22 @@ export default function LockedComparables({
 
         {/* Overlay */}
         <div className="pointer-events-none absolute inset-0 flex items-end justify-center bg-gradient-to-t from-white via-white/90 to-transparent pb-6">
-          <a
-            href={bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${inter.className} pointer-events-auto rounded-full bg-[#0B1E33] px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5`}
-          >
-            🔒 Schedule My Free Home Review to unlock all {comparables.length} comps + neighborhood summary
-          </a>
+          {booked ? (
+            <span
+              className={`${inter.className} pointer-events-auto rounded-full bg-[#0B1E33] px-5 py-2.5 text-sm font-semibold text-white shadow-lg`}
+            >
+              🔒 Your full comps unlock after your home visit
+            </span>
+          ) : (
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${inter.className} pointer-events-auto rounded-full bg-[#0B1E33] px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5`}
+            >
+              🔒 Schedule My Free Home Review to unlock all {comparables.length} comps + neighborhood summary
+            </a>
+          )}
         </div>
       </div>
     </section>

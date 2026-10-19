@@ -1,3 +1,5 @@
+// PATH: src/app/api/property-report/route.ts
+// REPLACES existing file. Only change: builds the private agent report link and sends it to GHL (agentReportUrl).
 import { NextRequest, NextResponse } from "next/server";
 import {
   getValueEstimate,
@@ -12,6 +14,7 @@ import {
   savePdfRecord,
 } from "@/lib/leads";
 import { sendLeadToGhl } from "@/lib/ghl";
+import { buildAgentReportUrl } from "@/lib/agent-token";
 import { generatePartialReportPdf } from "@/lib/pdf/generate";
 import { uploadPdf } from "@/lib/storage";
 import { sendEmail, partialReportEmailHtml } from "@/lib/email";
@@ -219,6 +222,7 @@ export async function POST(req: NextRequest) {
         signalTier: signal.tier,
         reportUrl: partialPdfUrl,
         smsConsent,
+        agentReportUrl: buildAgentReportUrl(req.nextUrl.origin, lead.id),
       });
       await markGhlWebhookSent(lead.id);
     } catch (ghlError) {

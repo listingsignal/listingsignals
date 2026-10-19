@@ -1,6 +1,8 @@
+// PATH: src/lib/leads.ts
+// REPLACES existing file. Changes: confirmBooking() only moves pending -> confirmed; new completeAppointment().
 import { db } from "@/db";
 import { leads, reports, pdfs, type NewLead, type NewReport } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export async function createLead(input: {
   firstName: string;
@@ -38,9 +40,18 @@ export async function markGhlWebhookSent(leadId: string) {
 }
 
 export async function confirmBooking(leadId: string) {
+  // Only moves pending -> confirmed. A lead that is already "completed"
+  // must never be pushed back (e.g. when they book a second visit).
   await db
     .update(leads)
     .set({ bookingStatus: "confirmed", bookingConfirmedAt: new Date(), updatedAt: new Date() })
+    .where(and(eq(leads.id, leadId), eq(leads.bookingStatus, "pending")));
+}
+
+export async function completeAppointment(leadId: string) {
+  await db
+    .update(leads)
+    .set({ bookingStatus: "completed", updatedAt: new Date() })
     .where(eq(leads.id, leadId));
 }
 

@@ -1,3 +1,6 @@
+// PATH: src/db/schema.ts
+// REPLACES existing file. Only change: booking_status enum gets a third value "completed".
+// Run in Neon SQL editor:  ALTER TYPE booking_status ADD VALUE 'completed';
 import {
   pgTable,
   uuid,
@@ -16,7 +19,7 @@ import { relations } from "drizzle-orm";
    ENUMS
    ===================================================================== */
 
-export const bookingStatusEnum = pgEnum("booking_status", ["pending", "confirmed"]);
+export const bookingStatusEnum = pgEnum("booking_status", ["pending", "confirmed", "completed"]);
 export const signalTierEnum = pgEnum("signal_tier", ["standard", "premium", "luxury"]);
 export const pdfTypeEnum = pgEnum("pdf_type", ["partial", "full"]);
 export const updateStatusEnum = pgEnum("update_status", ["success", "failed"]);

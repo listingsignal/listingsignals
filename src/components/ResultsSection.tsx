@@ -1,5 +1,6 @@
 // PATH: src/components/ResultsSection.tsx
-// REPLACES existing file. Only change: SMS consent paragraph under the phone field.
+// REPLACES existing file. Change: 3 booking states (pending / confirmed / completed). The full report unlocks only
+// on "completed"; after booking it shows a "Booked" message. SMS consent text unchanged.
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -175,9 +176,9 @@ export default function ResultsSection({
 
   const [showReport, setShowReport] = useState(false);
   const [report, setReport] = useState<PropertyReportResponse | null>(null);
-  const [bookingStatus, setBookingStatus] = useState<"pending" | "confirmed">(
-    "pending",
-  );
+  const [bookingStatus, setBookingStatus] = useState<
+    "pending" | "confirmed" | "completed"
+  >("pending");
   const [isCheckingBooking, setIsCheckingBooking] = useState(false);
 
   // Restore an in-progress report from the URL (?leadId=...) so refreshing
@@ -203,7 +204,9 @@ export default function ResultsSection({
           signal: { ...data.signal, raw: { momentumPct: null } },
         });
         setBookingStatus(
-          data.bookingStatus === "confirmed" ? "confirmed" : "pending",
+          data.bookingStatus === "completed" || data.bookingStatus === "confirmed"
+            ? data.bookingStatus
+            : "pending",
         );
         setShowReport(true);
       })
@@ -217,12 +220,14 @@ export default function ResultsSection({
   // whenever the tab regains focus (e.g. user comes back from the GHL
   // booking tab) — no manual refresh needed.
   const checkBookingStatusSilently = useCallback(async () => {
-    if (!report || bookingStatus === "confirmed") return;
+    if (!report || bookingStatus === "completed") return;
     try {
       const res = await fetch(`/api/reports/${report.leadId}`);
       if (res.ok) {
         const data = await res.json();
-        if (data.bookingStatus === "confirmed") setBookingStatus("confirmed");
+        if (data.bookingStatus === "completed" || data.bookingStatus === "confirmed") {
+          setBookingStatus(data.bookingStatus);
+        }
       }
     } catch (error) {
       console.error("Silent booking status check failed:", error);
@@ -335,7 +340,8 @@ export default function ResultsSection({
   if (showReport && report) {
     const topComp = report.comparables?.[0];
     const remainingComps = report.comparables?.slice(1) ?? [];
-    const isUnlocked = bookingStatus === "confirmed";
+    const isUnlocked = bookingStatus === "completed";
+    const isBooked = bookingStatus === "confirmed";
 
     const confidencePct = estimateConfidence(
       report.estimate.price,
@@ -482,12 +488,32 @@ export default function ResultsSection({
                   report.marketStats?.medianPricePerSquareFoot
                 }
                 bookingUrl={`${process.env.NEXT_PUBLIC_GHL_BOOKING_URL}?email=${encodeURIComponent(form.email)}&name=${encodeURIComponent(form.firstName)}`}
+                booked={isBooked}
               />
             )}
 
-            <LockedBookingCTA
-              bookingUrl={`${process.env.NEXT_PUBLIC_GHL_BOOKING_URL}?email=${encodeURIComponent(form.email)}&name=${encodeURIComponent(form.firstName)}`}
-            />
+            {isBooked ? (
+              <section className="mx-auto mt-6 w-full max-w-[1200px] px-4 pb-6 md:px-6 xl:px-10">
+                <div className="rounded-2xl bg-[#EAF6F4] px-6 py-8 text-center">
+                  <h2
+                    className={`${playfair.className} text-[22px] font-bold text-[#0B1E33]`}
+                  >
+                    You&apos;re booked. ✓
+                  </h2>
+                  <p
+                    className={`${inter.className} mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-[#0B1E33]/60`}
+                  >
+                    Your full report, with all comparable sales and the
+                    neighborhood summary, will be emailed to you after your
+                    home visit.
+                  </p>
+                </div>
+              </section>
+            ) : (
+              <LockedBookingCTA
+                bookingUrl={`${process.env.NEXT_PUBLIC_GHL_BOOKING_URL}?email=${encodeURIComponent(form.email)}&name=${encodeURIComponent(form.firstName)}`}
+              />
+            )}
 
             <div className="mx-auto max-w-[1200px] px-4 pb-10 text-center md:px-6 xl:px-10">
               <button
@@ -498,7 +524,9 @@ export default function ResultsSection({
               >
                 {isCheckingBooking
                   ? "Checking..."
-                  : "Already booked? Refresh to unlock"}
+                  : isBooked
+                    ? "Visit done? Refresh status"
+                    : "Already booked? Refresh to unlock"}
               </button>
             </div>
           </>
