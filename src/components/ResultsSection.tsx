@@ -1,6 +1,7 @@
 // PATH: src/components/ResultsSection.tsx
 // REPLACES existing file. Change: 3 booking states (pending / confirmed / completed). The full report unlocks only
 // on "completed"; after booking it shows a "Booked" message. SMS consent text unchanged.
+// Also: fires the Meta "Lead" event after a successful report request.
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -20,6 +21,7 @@ import {
   formatConfidence,
 } from "@/lib/format";
 import type { SignalLabel } from "@/lib/signal-score";
+import { trackEvent } from "@/lib/meta-pixel";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -307,6 +309,8 @@ export default function ResultsSection({
       }
 
       const data: PropertyReportResponse = await res.json();
+
+      trackEvent("Lead", { content_name: "Home Value Report" });
 
       setReport(data);
       setBookingStatus("pending");

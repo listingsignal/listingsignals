@@ -1,5 +1,5 @@
 // PATH: src/app/privacy-policy/page.tsx
-// REPLACES existing file. Changes: SMS section updated for checkbox consent, new "No Sharing" and "Data Security" sections.
+// REPLACES existing file. Change: added a short Meta Pixel paragraph in section 9 (Cookies & Tracking). Nothing else changed.
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -129,6 +129,13 @@ export default function PrivacyPolicyPage() {
           <p>
             Our Site may use cookies and similar technologies to remember your preferences and understand how you
             use our Site. You can control cookies through your browser settings.
+          </p>
+          <p>
+            We use the Meta Pixel, a tool from Meta Platforms, Inc., to measure how our ads perform and to show our
+            ads to people who may be interested. The Pixel uses cookies and sends information about your visit, such
+            as the pages you view and the actions you take, to Meta. We do not send your name, email, phone number or
+            property address to Meta through the Pixel. You can control how Meta uses your information in your Meta
+            ad settings.
           </p>
         </Section>
 

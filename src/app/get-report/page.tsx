@@ -1,9 +1,10 @@
 // PATH: src/app/get-report/page.tsx
-// REPLACES existing file. Clean layout: no overlap, hero and card are separate with clear spacing.
+// REPLACES existing file. Change: fires the Meta "Lead" event after a successful submit. Layout unchanged.
 "use client";
 
 import { useState } from "react";
 import { Playfair_Display, Inter } from "next/font/google";
+import { trackEvent } from "@/lib/meta-pixel";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -85,6 +86,9 @@ export default function GetReportPage() {
       }
 
       const data = await res.json();
+      trackEvent("Lead", { content_name: "Home Value Report" });
+      // Short pause so the pixel request leaves the browser before the page changes.
+      await new Promise((resolve) => setTimeout(resolve, 300));
       window.location.href = `/?leadId=${data.leadId}`;
     } catch (error) {
       setSubmitError(
