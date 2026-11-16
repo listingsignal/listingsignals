@@ -1,10 +1,9 @@
 // PATH: src/app/get-report/page.tsx
-// REPLACES existing file. Change: fires the Meta "Lead" event after a successful submit. Layout unchanged.
+// REPLACES existing file. Change: new separate, optional, unchecked AI-call consent checkbox (callConsent) sent to the API.
 "use client";
 
 import { useState } from "react";
 import { Playfair_Display, Inter } from "next/font/google";
-import { trackEvent } from "@/lib/meta-pixel";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -30,6 +29,7 @@ export default function GetReportPage() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [smsConsent, setSmsConsent] = useState(false);
+  const [callConsent, setCallConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -75,6 +75,7 @@ export default function GetReportPage() {
           email: form.email,
           phone: form.phone,
           smsConsent,
+          callConsent,
         }),
       });
 
@@ -86,9 +87,6 @@ export default function GetReportPage() {
       }
 
       const data = await res.json();
-      trackEvent("Lead", { content_name: "Home Value Report" });
-      // Short pause so the pixel request leaves the browser before the page changes.
-      await new Promise((resolve) => setTimeout(resolve, 300));
       window.location.href = `/?leadId=${data.leadId}`;
     } catch (error) {
       setSubmitError(
@@ -245,6 +243,40 @@ export default function GetReportPage() {
                 Message frequency varies (up to 4 msgs/month). Message &amp;
                 data rates may apply. Reply STOP to opt out or HELP for help.
                 Consent is not a condition of purchase. See our{" "}
+                <a
+                  href="/privacy-policy"
+                  className="underline hover:text-[#1FAE9F]"
+                >
+                  Privacy Policy
+                </a>{" "}
+                and{" "}
+                <a
+                  href="/terms-of-service"
+                  className="underline hover:text-[#1FAE9F]"
+                >
+                  Terms of Service
+                </a>
+                .
+              </span>
+            </label>
+
+            <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-[#F3F5F7] px-4 py-4">
+              <input
+                type="checkbox"
+                checked={callConsent}
+                onChange={(e) => setCallConsent(e.target.checked)}
+                className="mt-1 h-4 w-4 shrink-0 accent-[#1FAE9F]"
+              />
+              <span
+                className={`${inter.className} text-xs leading-[1.65] text-[#0B1E33]/70`}
+              >
+                I agree that Listing Signal may call me and leave voicemails at
+                the phone number I entered, using an AI voice assistant and
+                automated technology, about my home report and to help me book a
+                Free Home Evaluation. Agreeing is not required to get my report
+                or to buy anything. Call frequency may vary. I can say
+                &quot;stop&quot; on a call, or reply STOP to a text, to opt out
+                at any time. See our{" "}
                 <a
                   href="/privacy-policy"
                   className="underline hover:text-[#1FAE9F]"

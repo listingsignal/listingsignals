@@ -1,6 +1,5 @@
 // PATH: src/components/ResultsSection.tsx
-// REPLACES existing file. Change: 3 booking states (pending / confirmed / completed). The full report unlocks only
-// on "completed"; after booking it shows a "Booked" message. SMS consent text unchanged.
+// REPLACES existing file. Change: "home visit" renamed to "home evaluation" (booked message and refresh button). Nothing else changed.
 // Also: fires the Meta "Lead" event after a successful report request.
 "use client";
 
@@ -509,7 +508,7 @@ export default function ResultsSection({
                   >
                     Your full report, with all comparable sales and the
                     neighborhood summary, will be emailed to you after your
-                    home visit.
+                    home evaluation.
                   </p>
                 </div>
               </section>
@@ -529,7 +528,7 @@ export default function ResultsSection({
                 {isCheckingBooking
                   ? "Checking..."
                   : isBooked
-                    ? "Visit done? Refresh status"
+                    ? "Evaluation done? Refresh status"
                     : "Already booked? Refresh to unlock"}
               </button>
             </div>

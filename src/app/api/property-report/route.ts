@@ -1,5 +1,5 @@
 // PATH: src/app/api/property-report/route.ts
-// REPLACES existing file. Only change: builds the private agent report link and sends it to GHL (agentReportUrl).
+// REPLACES existing file. Change: reads callConsent, sends consent proof + street/city/state/zip + timeZone to GHL.
 import { NextRequest, NextResponse } from "next/server";
 import {
   getValueEstimate,
@@ -14,11 +14,14 @@ import {
   savePdfRecord,
 } from "@/lib/leads";
 import { sendLeadToGhl } from "@/lib/ghl";
-import { buildAgentReportUrl } from "@/lib/agent-token";
 import { generatePartialReportPdf } from "@/lib/pdf/generate";
 import { uploadPdf } from "@/lib/storage";
 import { sendEmail, partialReportEmailHtml } from "@/lib/email";
 import { estimateConfidence, formatConfidence } from "@/lib/format";
+import { timeZoneForState } from "@/lib/timezone";
+
+// Change this label whenever the call-consent checkbox wording changes.
+const CALL_CONSENT_VERSION = "ai-call-v1-2026-11";
 
 export const runtime = "nodejs";
 
@@ -44,6 +47,7 @@ interface RequestBody {
   email: string;
   phone: string;
   smsConsent?: boolean;
+  callConsent?: boolean;
 }
 
 export async function POST(req: NextRequest) {
@@ -60,6 +64,7 @@ export async function POST(req: NextRequest) {
   const email = body.email?.trim();
   const phone = body.phone?.trim();
   const smsConsent = body.smsConsent === true;
+  const callConsent = body.callConsent === true;
 
   if (!address) {
     return NextResponse.json(
@@ -222,7 +227,14 @@ export async function POST(req: NextRequest) {
         signalTier: signal.tier,
         reportUrl: partialPdfUrl,
         smsConsent,
-        agentReportUrl: buildAgentReportUrl(req.nextUrl.origin, lead.id),
+        callConsent,
+        callConsentAt: callConsent ? new Date().toISOString() : null,
+        callConsentVersion: CALL_CONSENT_VERSION,
+        street: valueEstimate.subjectProperty?.addressLine1 ?? "",
+        city: valueEstimate.subjectProperty?.city ?? "",
+        state: valueEstimate.subjectProperty?.state ?? "",
+        postalCode: valueEstimate.subjectProperty?.zipCode ?? "",
+        timeZone: timeZoneForState(valueEstimate.subjectProperty?.state),
       });
       await markGhlWebhookSent(lead.id);
     } catch (ghlError) {

@@ -1,3 +1,5 @@
+// PATH: src/lib/pdf/PartialReportPdf.tsx
+// REPLACES existing file. Change: "free home visit" and "Free Home Review" renamed to "free home evaluation" / "Free Home Evaluation". Nothing else changed.
 import {
   Document,
   Page,
@@ -357,7 +359,7 @@ export function PartialReportPdf({
 
           <View style={styles.ctaBox}>
             <Text style={styles.ctaText}>
-              Book your free home visit to unlock your full report
+              Book your free home evaluation to unlock your full report
             </Text>
             <Text style={styles.ctaSub}>
               Comparable sales, neighborhood pricing trends, and more
@@ -379,7 +381,7 @@ export function PartialReportPdf({
                     strokeLinejoin="round"
                   />
                 </Svg>
-                <Text>Schedule My Free Home Review</Text>
+                <Text>Schedule My Free Home Evaluation</Text>
               </Link>
             ) : (
               <View style={styles.ctaPill}>
@@ -398,7 +400,7 @@ export function PartialReportPdf({
                     strokeLinejoin="round"
                   />
                 </Svg>
-                <Text>Schedule My Free Home Review</Text>
+                <Text>Schedule My Free Home Evaluation</Text>
               </View>
             )}
           </View>

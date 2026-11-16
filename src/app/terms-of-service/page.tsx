@@ -1,5 +1,5 @@
 // PATH: src/app/terms-of-service/page.tsx
-// REPLACES existing file. Changes: SMS program terms updated for checkbox consent (name, types, frequency, STOP/HELP, support), new "Carrier Liability" section.
+// REPLACES existing file. Change: adds AI voice call / voicemail consent paragraph in section 5. Section numbers unchanged.
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -40,7 +40,7 @@ export default function TermsOfServicePage() {
           <p>
             Listing Signal provides an automated home value estimate and market insight report (&quot;Signal
             Score&quot;) based on publicly available and third-party real estate data. We also offer the option to
-            schedule a free, no-obligation in-home review with one of our real estate professionals.
+            schedule a free, no-obligation home evaluation with one of our real estate professionals.
           </p>
         </Section>
 
@@ -50,7 +50,7 @@ export default function TermsOfServicePage() {
             automated estimates generated using available market data and statistical models. They are provided
             for informational purposes only and{" "}
             <strong>do not constitute a formal appraisal</strong>. Actual home values may vary. For an accurate,
-            professional valuation, please schedule a free home review or consult a licensed appraiser.
+            professional valuation, please schedule a free home evaluation or consult a licensed appraiser.
           </p>
         </Section>
 
@@ -61,11 +61,11 @@ export default function TermsOfServicePage() {
           </p>
         </Section>
 
-        <Section title="5. SMS Messaging Program &amp; Communications Consent">
+        <Section title="5. SMS, AI Voice Calls &amp; Communications Consent">
           <p>
             <strong>Program:</strong> Listing Signal text messaging. If you check the optional SMS consent box on
             our form, you agree to receive text messages (SMS) from Listing Signal about your home value report,
-            appointment confirmations and reminders for a free home review, and market updates. Consent is not a
+            appointment confirmations and reminders for a free home evaluation, and market updates. Consent is not a
             condition of purchase, and you can receive your report without agreeing to text messages.
           </p>
           <p>
@@ -79,6 +79,15 @@ export default function TermsOfServicePage() {
               info@listingsignal.com
             </a>
             . You may opt out of emails by using the unsubscribe link in any email.
+          </p>
+          <p>
+            <strong>AI voice calls:</strong> If you check the separate, optional call consent box on our form, you
+            agree that Listing Signal may call you and leave voicemails at the phone number you entered, using an AI
+            voice assistant and automated technology, about your home value report and to help you book a free home
+            evaluation. We call only between 8 AM and 8 PM in your local time. Consent is not a condition of
+            purchase, and you can receive your report without agreeing to calls. You can opt out at any time by
+            telling the assistant to stop, by replying <strong>STOP</strong> to a text, or by contacting us at the
+            email above.
           </p>
           <p>
             See our{" "}
@@ -98,11 +107,11 @@ export default function TermsOfServicePage() {
           </p>
         </Section>
 
-        <Section title="7. Free Home Review Appointments">
+        <Section title="7. Free Home Evaluation Appointments">
           <p>
-            Scheduling a free home review does not obligate you to list your property with Listing Signal or any
+            Scheduling a free home evaluation does not obligate you to list your property with Listing Signal or any
             affiliated agent. There is no cost or commitment associated with booking or attending a free home
-            review.
+            evaluation.
           </p>
         </Section>
 

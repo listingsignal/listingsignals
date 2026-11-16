@@ -1,5 +1,5 @@
 // PATH: src/components/ScheduleTracker.tsx
-// NEW file. Fires the Meta "Schedule" event once when the booking Thank You page opens.
+// REPLACES existing file. Change: Meta Schedule event label renamed to "Free Home Evaluation". Fires once when the booking Thank You page opens.
 "use client";
 
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ export default function ScheduleTracker() {
       tries += 1;
       if (typeof window.fbq === "function") {
         window.clearInterval(timer);
-        trackEventOnce("ls_schedule_tracked", "Schedule", { content_name: "Free Home Visit" });
+        trackEventOnce("ls_schedule_tracked", "Schedule", { content_name: "Free Home Evaluation" });
       } else if (tries > 40) {
         window.clearInterval(timer);
       }

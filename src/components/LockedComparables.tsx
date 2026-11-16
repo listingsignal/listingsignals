@@ -1,5 +1,5 @@
 // PATH: src/components/LockedComparables.tsx
-// REPLACES existing file. Only change: new optional `booked` prop (overlay shows 'unlocks after your home visit').
+// REPLACES existing file. Change: "home visit" and "Free Home Review" renamed to "home evaluation" / "Free Home Evaluation". Nothing else changed.
 "use client";
 
 import { Inter } from "next/font/google";
@@ -23,7 +23,7 @@ interface LockedComparablesProps {
   medianPricePerSqft?: number | null;
   medianYearBuilt?: number | null;
   bookingUrl?: string;
-  /** true once the visit is booked: overlay stops linking to the booking page */
+  /** true once the evaluation is booked: overlay stops linking to the booking page */
   booked?: boolean;
 }
 
@@ -97,7 +97,7 @@ export default function LockedComparables({
             <span
               className={`${inter.className} pointer-events-auto rounded-full bg-[#0B1E33] px-5 py-2.5 text-sm font-semibold text-white shadow-lg`}
             >
-              🔒 Your full comps unlock after your home visit
+              🔒 Your full comps unlock after your home evaluation
             </span>
           ) : (
             <a
@@ -106,7 +106,7 @@ export default function LockedComparables({
               rel="noopener noreferrer"
               className={`${inter.className} pointer-events-auto rounded-full bg-[#0B1E33] px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5`}
             >
-              🔒 Schedule My Free Home Review to unlock all {comparables.length} comps + neighborhood summary
+              🔒 Schedule My Free Home Evaluation to unlock all {comparables.length} comps + neighborhood summary
             </a>
           )}
         </div>

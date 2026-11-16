@@ -1,5 +1,5 @@
 // PATH: src/app/privacy-policy/page.tsx
-// REPLACES existing file. Change: added a short Meta Pixel paragraph in section 9 (Cookies & Tracking). Nothing else changed.
+// REPLACES existing file. Change: adds AI voice call / voicemail consent wording (sections 2, 3, 4, 6). Section numbers unchanged.
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -45,7 +45,8 @@ export default function PrivacyPolicyPage() {
             <li><strong>Contact Information</strong> — your first name, email address, and phone number, provided
               when you request a report.</li>
             <li><strong>Communication Data</strong> — records of emails, text messages, and calls exchanged with us,
-              including booking and appointment details, and your SMS consent choice.</li>
+              including booking and appointment details, your SMS consent choice, and your AI call consent choice
+              (with the date and time you gave it).</li>
             <li><strong>Usage Data</strong> — how you interact with our Site, including pages visited and links
               clicked, collected automatically through standard web technologies.</li>
           </ul>
@@ -58,10 +59,14 @@ export default function PrivacyPolicyPage() {
             <li>Deliver your report and related updates by email.</li>
             <li>
               Contact you by email, and by text message (SMS) if you have agreed to receive texts, to follow up on
-              your report, share market updates, and help you schedule a free home review. See Section 6 for
+              your report, share market updates, and help you schedule a free home evaluation. See Section 6 for
               details on SMS communications.
             </li>
-            <li>Schedule and manage appointments for free home reviews.</li>
+            <li>
+              Call you and leave voicemails, using an AI voice assistant and automated technology, if you have
+              agreed to receive such calls. See Section 6 for details on call communications.
+            </li>
+            <li>Schedule and manage appointments for free home evaluations.</li>
             <li>Improve and maintain our Site and services.</li>
             <li>Comply with legal obligations.</li>
           </ul>
@@ -72,7 +77,8 @@ export default function PrivacyPolicyPage() {
           <ul className="list-disc space-y-1.5 pl-5">
             <li>
               <strong>Service providers</strong> who help us operate our business, including property data
-              providers, email delivery services, and our customer relationship management (CRM) platform, solely
+              providers, email delivery services, and our customer relationship management (CRM) and
+              AI voice calling platform, solely
               for the purpose of providing our services to you.
             </li>
             <li>Legal authorities, if required by law or to protect our rights.</li>
@@ -88,11 +94,11 @@ export default function PrivacyPolicyPage() {
           </p>
         </Section>
 
-        <Section title="6. SMS &amp; Email Communications">
+        <Section title="6. SMS, Voice Call &amp; Email Communications">
           <p>
             Listing Signal sends text messages (SMS) only to users who have checked the optional SMS consent box on
             our form. The messages relate to your home value report, appointment confirmations and reminders for a
-            free home review, and market updates. Message frequency varies. Message and data rates may apply.
+            free home evaluation, and market updates. Message frequency varies. Message and data rates may apply.
           </p>
           <p>
             You can opt out of SMS messages at any time by replying <strong>STOP</strong> to any message. Reply{" "}
@@ -103,6 +109,20 @@ export default function PrivacyPolicyPage() {
             Consent to receive SMS messages is not a condition of purchasing any goods or services, and you can
             receive your home value report without agreeing to text messages. Carriers are not liable for delayed
             or undelivered messages.
+          </p>
+          <p>
+            <strong>AI voice calls.</strong> Listing Signal makes phone calls and leaves voicemails using an AI
+            voice assistant and automated technology only to users who have checked the separate, optional call
+            consent box on our form. These calls relate to your home value report and to helping you book a free
+            home evaluation. We call only between 8 AM and 8 PM in your local time, and we make a limited number
+            of attempts. Call frequency may vary. Calls may be recorded and transcribed so we can follow up with
+            you and improve our service.
+          </p>
+          <p>
+            You can opt out of calls at any time by telling the assistant to stop during a call, by replying{" "}
+            <strong>STOP</strong> to a text, or by contacting us at the email in Section 11. We will stop
+            calling you promptly. Consent to receive AI calls is not a condition of purchasing any goods or
+            services, and you can receive your home value report without agreeing to calls.
           </p>
         </Section>
 

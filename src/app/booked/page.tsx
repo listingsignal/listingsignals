@@ -1,5 +1,5 @@
 // PATH: src/app/booked/page.tsx
-// NEW file. Thank You page shown after a free home visit is booked (GHL calendar redirects here).
+// REPLACES existing file. Change: "free home visit" renamed to "free home evaluation". Thank You page shown after a free home evaluation is booked (GHL calendar redirects here).
 // Its only extra job is to fire the Meta "Schedule" event, once.
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -29,8 +29,8 @@ export default function BookedPage() {
           You&apos;re booked.
         </h1>
         <p className={`${inter.className} mt-4 text-base leading-relaxed text-[#0B1E33]/70`}>
-          Your free home visit is confirmed. We&apos;ve sent your confirmation details. Your full home report unlocks
-          after your visit.
+          Your free home evaluation is confirmed. We&apos;ve sent your confirmation details. Your full home report unlocks
+          after your evaluation.
         </p>
         <Link
           href="/"

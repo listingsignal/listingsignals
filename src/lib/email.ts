@@ -1,6 +1,5 @@
 // PATH: src/lib/email.ts
-// REPLACES existing file. Changes: sendEmail() now supports replyTo and logs the real SendGrid error
-// (helps debug the 401); added appointmentCompletedEmailHtml() and contactNotificationEmailHtml() at the bottom.
+// REPLACES existing file. Change: "home visit" renamed to "home evaluation" in the two emails. Nothing else changed.
 /**
  * Email sending — SendGrid.
  *
@@ -107,7 +106,7 @@ export function partialReportEmailHtml(input: { firstName: string; reportUrl: st
                         Want the full picture?
                       </p>
                       <p style="color:#6B7280; font-size:13px; line-height:1.5; margin: 0;">
-                        Comparable sales, neighborhood pricing trends, and a personalized pricing strategy are unlocked with a free, no-obligation home visit.
+                        Comparable sales, neighborhood pricing trends, and a personalized pricing strategy are unlocked with a free, no-obligation home evaluation.
                       </p>
                     </td>
                   </tr>
@@ -173,7 +172,7 @@ export function fullReportEmailHtml(input: { firstName: string; reportUrl: strin
                   </tr>
                 </table>
                 <p style="color:#6B7280; font-size:13px; line-height:1.6; margin: 24px 0 0 0;">
-                  We look forward to seeing you at your home visit. If you have any questions before then, just reply to this email.
+                  We look forward to seeing you at your home evaluation. If you have any questions before then, just reply to this email.
                 </p>
               </td>
             </tr>
