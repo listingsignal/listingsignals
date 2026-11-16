@@ -1,5 +1,6 @@
 // PATH: src/components/ResultsSection.tsx
 // REPLACES existing file. Changes: (1) NEW separate optional AI-call consent checkbox (callConsent) in the home page form, sent to the API.
+// (1b) Layout fix: md:py-0 replaced with md:pt-[110px] md:pb-[48px] so the taller card is not hidden under the fixed header.
 // (2) "home visit" renamed to "home evaluation". (3) Fires the Meta "Lead" event after a successful report request.
 "use client";
 
@@ -541,7 +542,7 @@ export default function ResultsSection({
   }
 
   return (
-    <div className="relative w-full bg-[#F3F5F7] overflow-hidden min-h-screen flex justify-center items-center md:py-0 pt-[15vh] pb-[10vh]">
+    <div className="relative w-full bg-[#F3F5F7] overflow-hidden min-h-screen flex justify-center items-center md:pt-[110px] md:pb-[48px] pt-[15vh] pb-[10vh]">
       <div className="absolute inset-0 bg-[url('/bg.png')] bg-cover bg-center" />
       <div className="absolute inset-0 bg-white/95" />
 
