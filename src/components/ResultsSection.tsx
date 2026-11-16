@@ -1,6 +1,6 @@
 // PATH: src/components/ResultsSection.tsx
-// REPLACES existing file. Change: "home visit" renamed to "home evaluation" (booked message and refresh button). Nothing else changed.
-// Also: fires the Meta "Lead" event after a successful report request.
+// REPLACES existing file. Changes: (1) NEW separate optional AI-call consent checkbox (callConsent) in the home page form, sent to the API.
+// (2) "home visit" renamed to "home evaluation". (3) Fires the Meta "Lead" event after a successful report request.
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -172,6 +172,7 @@ export default function ResultsSection({
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [smsConsent, setSmsConsent] = useState(false);
+  const [callConsent, setCallConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -297,6 +298,7 @@ export default function ResultsSection({
           email: form.email,
           phone: form.phone,
           smsConsent,
+          callConsent,
         }),
       });
 
@@ -720,7 +722,7 @@ export default function ResultsSection({
                   {errors.phone}
                 </p>
               )}
-              <label className="mb-6 mt-3 flex cursor-pointer items-start gap-2.5">
+              <label className="mb-3 mt-3 flex cursor-pointer items-start gap-2.5">
                 <input
                   type="checkbox"
                   checked={smsConsent}
@@ -735,6 +737,40 @@ export default function ResultsSection({
                   Message frequency varies (up to 4 msgs/month). Message &amp;
                   data rates may apply. Reply STOP to opt out or HELP for help.
                   Consent is not a condition of purchase. See our{" "}
+                  <a
+                    href="/privacy-policy"
+                    className="underline hover:text-[#1FAE9F]"
+                  >
+                    Privacy Policy
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="/terms-of-service"
+                    className="underline hover:text-[#1FAE9F]"
+                  >
+                    Terms of Service
+                  </a>
+                  .
+                </span>
+              </label>
+
+              <label className="mb-6 flex cursor-pointer items-start gap-2.5">
+                <input
+                  type="checkbox"
+                  checked={callConsent}
+                  onChange={(e) => setCallConsent(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-[#1FAE9F]"
+                />
+                <span
+                  className={`${inter.className} text-[11px] leading-relaxed text-[#0B1E33]/70`}
+                >
+                  I agree that Listing Signal may call me and leave voicemails
+                  at the phone number I entered, using an AI voice assistant and
+                  automated technology, about my home report and to help me book
+                  a Free Home Evaluation. Agreeing is not required to get my
+                  report or to buy anything. Call frequency may vary. I can say
+                  &quot;stop&quot; on a call, or reply STOP to a text, to opt
+                  out at any time. See our{" "}
                   <a
                     href="/privacy-policy"
                     className="underline hover:text-[#1FAE9F]"
