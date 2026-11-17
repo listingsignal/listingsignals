@@ -1,5 +1,6 @@
 // PATH: src/lib/ghl.ts
-// REPLACES existing file. Change: adds callConsent (+time/version), street/city/state/postalCode and timeZone to the GHL payload.
+// REPLACES existing file. Change: adds sendFullReportToGhl() (sends the full report link to GHL after the evaluation).
+// Everything else is kept, including sendScoreUpdateToGhl() for the 30-day cron.
 /**
  * GoHighLevel (GHL) webhook integration.
  *
@@ -74,5 +75,84 @@ export async function sendLeadToGhl(payload: GhlLeadPayload): Promise<void> {
   if (!res.ok) {
     const body = await res.text().catch(() => "");
     throw new GhlWebhookError(`GHL webhook failed (${res.status}): ${body}`, res.status);
+  }
+}
+
+
+/* =====================================================================
+   SCORE UPDATE — pushed by the 30-day cron after a score recalculation.
+   Goes to a SECOND GHL Inbound Webhook (workflow "10 - Score Update").
+   Requires GHL_SCORE_UPDATE_WEBHOOK_URL in environment.
+   ===================================================================== */
+
+export interface GhlScoreUpdatePayload {
+  leadId: string;
+  email: string;
+  address: string;
+  estimatedValue: number;
+  signalScore: number;
+  signalTier: string;
+}
+
+export async function sendScoreUpdateToGhl(payload: GhlScoreUpdatePayload): Promise<void> {
+  const webhookUrl = process.env.GHL_SCORE_UPDATE_WEBHOOK_URL;
+
+  if (!webhookUrl) {
+    throw new GhlWebhookError("GHL_SCORE_UPDATE_WEBHOOK_URL is missing from environment variables.");
+  }
+
+  const res = await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      internalLeadId: payload.leadId,
+      email: payload.email,
+      address: payload.address,
+      estimatedValue: payload.estimatedValue,
+      signalScore: payload.signalScore,
+      signalTier: payload.signalTier,
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new GhlWebhookError(`GHL score update webhook failed (${res.status}): ${body}`, res.status);
+  }
+}
+
+
+/* =====================================================================
+   FULL REPORT LINK — pushed after the evaluation is marked Showed.
+   Goes to a THIRD GHL Inbound Webhook (workflow "12 - Full Report Link"),
+   which finds the contact by email and fills the "Agent Report Url" field.
+   Requires GHL_FULL_REPORT_WEBHOOK_URL in environment.
+   ===================================================================== */
+
+export interface GhlFullReportPayload {
+  leadId: string;
+  email: string;
+  agentReportUrl: string;
+}
+
+export async function sendFullReportToGhl(payload: GhlFullReportPayload): Promise<void> {
+  const webhookUrl = process.env.GHL_FULL_REPORT_WEBHOOK_URL;
+
+  if (!webhookUrl) {
+    throw new GhlWebhookError("GHL_FULL_REPORT_WEBHOOK_URL is missing from environment variables.");
+  }
+
+  const res = await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      internalLeadId: payload.leadId,
+      email: payload.email,
+      agent_report_url: payload.agentReportUrl,
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new GhlWebhookError(`GHL full report webhook failed (${res.status}): ${body}`, res.status);
   }
 }

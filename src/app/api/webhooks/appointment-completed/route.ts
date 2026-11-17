@@ -1,5 +1,6 @@
 // PATH: src/app/api/webhooks/appointment-completed/route.ts
-// NEW file (replaces the earlier version I sent). Marks the lead Completed (unlocks the website report), then
+// REPLACE existing file. Change: after the full PDF is made, its link is also sent to GHL (Agent Report Url field).
+// Earlier note: Marks the lead Completed (unlocks the website report), then
 // builds + emails the full PDF. Called by GHL workflow "09 - Appointment Completed". Builds the full PDF from the latest
 // report, stores it, and emails the link to the homeowner.
 import { NextRequest, NextResponse } from "next/server";
@@ -8,6 +9,7 @@ import { generateFullReportPdf } from "@/lib/pdf/generate";
 import { buildFullReportProps } from "@/lib/pdf/full-report-props";
 import { uploadPdf } from "@/lib/storage";
 import { sendEmail, appointmentCompletedEmailHtml } from "@/lib/email";
+import { sendFullReportToGhl } from "@/lib/ghl";
 
 export const runtime = "nodejs";
 
@@ -62,6 +64,13 @@ export async function POST(req: NextRequest) {
     });
 
     const publicReportUrl = `${req.nextUrl.origin}/api/reports/download/${pdfRecord.id}`;
+
+    // Put the full report link on the GHL contact. Never blocks the rest.
+    try {
+      await sendFullReportToGhl({ leadId: lead.id, email: lead.email, agentReportUrl: publicReportUrl });
+    } catch (ghlError) {
+      console.error("GHL full report link failed:", ghlError);
+    }
 
     const { sent } = await sendEmail({
       to: lead.email,
